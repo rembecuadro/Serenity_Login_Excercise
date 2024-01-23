@@ -8,11 +8,12 @@ package rembe.serenity_login_excercise.Authentication;
 //@author rembe
 
 import net.serenitybdd.core.pages.PageObject;
+import org.openqa.selenium.WebElement;
 
  
 public class LogoutResult extends PageObject{
-    //@Override
-    public String tryLoginButton(){
-        return $("#user-name").getValue();
+    
+    public WebElement loginButtonPresence(){
+        return $("#login-button").getElement();
     }
 }

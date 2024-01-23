@@ -43,8 +43,12 @@ class TestPurchase {
     }
     @Test
     void testLogin() {
-        navigate.navigateTo();
-        login.login(User.STANDARD_USER);
+        Serenity.reportThat("Navigate to the web page", () -> 
+        navigate.navigateTo()
+        );
+        Serenity.reportThat("Login with a default username", () -> 
+        login.login(User.STANDARD_USER)
+        );
         Serenity.reportThat("Verify Login", () -> {
             assertThat(purchaseResult.getTitle().equalsIgnoreCase("Products"));
         });
@@ -52,7 +56,10 @@ class TestPurchase {
 
     @Test
     void testPurchase() {
-        purchase.purchase("Remberto", "Cuadro", "12345");
+        Serenity.reportThat("Perform a purchase with credentials", () ->
+        purchase.purchase("Remberto", "Cuadro", "12345")
+        );
+        
         Serenity.reportThat("Result Purchase", () -> {
             assertThat(purchaseResult.getTitle().equalsIgnoreCase("Checkout: Complete!"));
         });
@@ -61,18 +68,19 @@ class TestPurchase {
     
     @Test
     void testRemove() {
-        purchaseRemove.purchaseRemove();
+        Serenity.reportThat("Choose 3 items to buy and delete them", () -> 
+                purchaseRemove.purchaseRemove());
         Serenity.reportThat("Purchase Remove Result", () -> {
             assertThat(purchaseRemove.getCart());
         });
     }
 
     @Test
-    void testLogout() throws InterruptedException {
-        Logout.logout();
-//        Serenity.reportThat("Verify Logout", () -> {
-//            assertThat(LogoutResult.tryLoginButton().equalsIgnoreCase("Username"));
-//        });
+    void testLogout() {
+        Serenity.reportThat("Logout Action Performed", () -> Logout.logout());
+        Serenity.reportThat("Verify Logout", () -> {
+            assertThat(LogoutResult.loginButtonPresence().isDisplayed());
+        });
     }
 
 }
